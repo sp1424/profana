@@ -12,7 +12,25 @@ COPY --from=prometheus /usr/share/prometheus/console_libraries/ /usr/share/prome
 COPY --from=prometheus /usr/share/prometheus/consoles/ /usr/share/prometheus/consoles/ 
 COPY --from=prometheus /bin/prometheus /bin/prometheus 
 
-COPY run.sh run.sh
-RUN chmod 701 run.sh
+ENV PATH="/usr/share/grafana/bin:$PATH" \
+    GF_PATHS_CONFIG="/etc/grafana/grafana.ini" \
+    GF_PATHS_DATA="/var/lib/grafana" \
+    GF_PATHS_HOME="/usr/share/grafana" \
+    GF_PATHS_LOGS="/var/log/grafana" \
+    GF_PATHS_PLUGINS="/var/lib/grafana/plugins" \
+    GF_PATHS_PROVISIONING="/etc/grafana/provisioning"
 
-CMD ./run.sh
+RUN echo $GF_PATHS_HOME
+
+COPY --from=grafana $GF_PATHS_HOME $GF_PATHS_HOME
+COPY --from=grafana $GF_PATHS_DATA $GF_PATHS_DATA
+COPY --from=grafana $GF_PATHS_CONFIG $GF_PATHS_CONFIG
+COPY --from=grafana $GF_PATHS_LOGS $GF_PATHS_LOGS
+COPY --from=grafana $GF_PATHS_PLUGINS $GF_PATHS_PLUGINS
+COPY --from=grafana $GF_PATHS_PROVISIONING $GF_PATHS_PROVISIONING 
+COPY --from=grafana run.sh run.sh
+
+COPY profana.sh profana.sh
+RUN chmod 701 profana.sh
+
+CMD ./profana.sh
