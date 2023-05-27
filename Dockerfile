@@ -1,6 +1,5 @@
 FROM prom/prometheus as prometheus
 
-
 FROM grafana/grafana-oss as grafana
 
 FROM ubuntu
