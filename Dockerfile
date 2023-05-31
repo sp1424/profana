@@ -33,8 +33,10 @@ RUN apt-get update \
   && apt-get install python3.11 -y \
   && apt-get install curl -y \
   && curl -O https://bootstrap.pypa.io/get-pip.py \
-  && python3.11 get-pip.py
+  && python3.11 get-pip.py \
+  && pip install supervisor
 
+COPY supervisord.conf /etc/supervisord.conf
 COPY profana.sh profana.sh
 RUN chmod 701 profana.sh
 
