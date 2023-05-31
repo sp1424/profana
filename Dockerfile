@@ -29,6 +29,12 @@ COPY --from=grafana $GF_PATHS_PLUGINS $GF_PATHS_PLUGINS
 COPY --from=grafana $GF_PATHS_PROVISIONING $GF_PATHS_PROVISIONING 
 COPY --from=grafana run.sh run.sh
 
+RUN apt-get update \
+  && apt-get install python3.11 -y \
+  && apt-get install curl -y \
+  && curl -O https://bootstrap.pypa.io/get-pip.py \
+  && python3.11 get-pip.py
+
 COPY profana.sh profana.sh
 RUN chmod 701 profana.sh
 
