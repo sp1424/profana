@@ -27,7 +27,7 @@ COPY --from=grafana $GF_PATHS_CONFIG $GF_PATHS_CONFIG
 COPY --from=grafana $GF_PATHS_LOGS $GF_PATHS_LOGS
 COPY --from=grafana $GF_PATHS_PLUGINS $GF_PATHS_PLUGINS
 COPY --from=grafana $GF_PATHS_PROVISIONING $GF_PATHS_PROVISIONING 
-COPY --from=grafana run.sh run.sh
+COPY --from=grafana run.sh run_grafana.sh
 
 RUN apt-get update \
   && apt-get install python3.11 -y \
@@ -37,8 +37,5 @@ RUN apt-get update \
   && pip install supervisor
 
 COPY supervisord.conf /etc/supervisord.conf
-COPY profana.sh profana.sh
-RUN chmod 701 profana.sh
 
-ENTRYPOINT ["tail"]
-CMD ["-f","/dev/null"]
+CMD ["supervisord"]
