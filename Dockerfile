@@ -40,4 +40,5 @@ COPY supervisord.conf /etc/supervisord.conf
 COPY profana.sh profana.sh
 RUN chmod 701 profana.sh
 
-CMD ./profana.sh
+ENTRYPOINT ["tail"]
+CMD ["-f","/dev/null"]
