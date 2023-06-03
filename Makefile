@@ -5,3 +5,11 @@ profana-up:
 profana-down:
 	docker stop profana 
 	docker rm profana
+
+example-up:
+	docker-compose -f example/docker-compose.yml up -d
+
+example-down:
+	docker-compose -f example/docker-compose.yml down
+
+

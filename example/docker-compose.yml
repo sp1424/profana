@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  profana:
+    container_name: profana
+    build:
+      context: ..
+    ports:
+      - 3000:3000
+      - 9090:9090
+
