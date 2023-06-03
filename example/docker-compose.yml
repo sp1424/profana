@@ -8,4 +8,11 @@ services:
     ports:
       - 3000:3000
       - 9090:9090
-
+  
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/usr/share/nginx/html
